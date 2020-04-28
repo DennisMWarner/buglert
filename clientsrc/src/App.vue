@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="bg-warning full-screen">
     <navbar />
     <router-view />
   </div>
@@ -18,8 +18,8 @@ export default {
     }
   },
   components: {
-    Navbar,
-  },
+    Navbar
+  }
 };
 </script>
 
@@ -27,4 +27,7 @@ export default {
 @import "./assets/_variables.scss";
 @import "bootstrap";
 @import "./assets/_overrides.scss";
+.full-screen {
+  min-height: 100vh;
+}
 </style>

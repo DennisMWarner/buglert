@@ -12,17 +12,30 @@ let baseUrl = location.host.includes("localhost")
 let api = Axios.create({
   baseURL: baseUrl + "api",
   timeout: 3000,
-  withCredentials: true
+  withCredentials: true,
 });
 
 export default new Vuex.Store({
   state: {
-    profile: {}
+    bugs: [],
+    profile: {},
+    activeBug: {},
+    notes: [],
   },
   mutations: {
     setProfile(state, profile) {
       state.profile = profile;
-    }
+    },
+    setBugs(state, bugs) {
+      state.bugs = bugs;
+    },
+    setActiveBug(state, activeBug) {
+      state.activeBug = activeBug;
+    },
+
+    setNotes(state, notes) {
+      state.notes = notes;
+    },
   },
   actions: {
     setBearer({}, bearer) {
@@ -38,6 +51,50 @@ export default new Vuex.Store({
       } catch (error) {
         console.error(error);
       }
-    }
-  }
+    },
+
+    async getBugs({ commit }) {
+      try {
+        let res = await api.get("bugs");
+        commit("setBugs", res.data);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async getBug({ commit, dispatch }, bugId) {
+      try {
+        let res = await api.get("bugs/" + bugId);
+        commit("setActiveBug", res.data);
+        console.log("getBug res: ", res.data);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async addBug({ commit, dispatch }, newBug) {
+      try {
+        let res = await api.post("bugs", newBug);
+        dispatch("getBugs", newBug.id);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    async addNote({ commit, dispatch }, newNote) {
+      try {
+        let res = await api.post("notes", newNote);
+        dispatch("getNotesByBugId", newNote.bug);
+        // dispatch("getNotesByBugId");
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async getNotesByBugId({ commit, dispatch }, bugId) {
+      try {
+        let res = await api.get("bugs/" + bugId + "/notes");
+        commit("setNotes", res.data);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+  },
 });
