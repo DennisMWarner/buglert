@@ -28,6 +28,7 @@ export default new Vuex.Store({
     },
     setBugs(state, bugs) {
       state.bugs = bugs;
+      console.log("bugs commited: ", bugs);
     },
     setActiveBug(state, activeBug) {
       state.activeBug = activeBug;
@@ -53,6 +54,15 @@ export default new Vuex.Store({
       }
     },
 
+    async addBug({ commit, dispatch }, newBug) {
+      try {
+        let res = await api.post("bugs", newBug);
+        dispatch("getBugs");
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
     async getBugs({ commit }) {
       try {
         let res = await api.get("bugs");
@@ -71,28 +81,47 @@ export default new Vuex.Store({
         console.error(error);
       }
     },
-    async addBug({ commit, dispatch }, newBug) {
+    async getUserBugs({ commit, dispatch }, userId) {
       try {
-        let res = await api.post("bugs", newBug);
-        dispatch("getBugs", newBug.id);
+        let res = await api.get(`bugs/user/${userId}`);
+        commit("setBugs", res.data);
       } catch (error) {
         console.error(error);
       }
     },
-    // async closeBug({ commit, dispatch }, bugId) {
-    //   try {
-    //     let res = await api.put("bugs/" + bugId, bugId:{ closed: true });
-    //     dispatch("getBugs");
-    //   } catch (error) {
-    //     console.error(error);
-    //   }
-    // },
+
+    async getClosedBugs({ commit }) {
+      try {
+        let res = await api.get("bugs/closed");
+        commit("setBugs", res.data);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    async closeBug({ dispatch }, bugId) {
+      try {
+        let res = await api.put("bugs/" + bugId, { closed: true });
+        console.log("getBug: ", bugId, res.data);
+        dispatch("getBugs");
+      } catch (error) {
+        console.error(error);
+      }
+    },
+
+    async getOpenBugs({ commit }) {
+      try {
+        let res = await api.get("bugs/open");
+        commit("setBugs", res.data);
+      } catch (error) {
+        console.error(error);
+      }
+    },
 
     async addNote({ commit, dispatch }, newNote) {
       try {
         let res = await api.post("notes", newNote);
         dispatch("getNotesByBugId", newNote.bug);
-        // dispatch("getNotesByBugId");
       } catch (error) {
         console.error(error);
       }
@@ -103,6 +132,14 @@ export default new Vuex.Store({
         commit("setNotes", res.data);
       } catch (error) {
         console.error(error);
+      }
+    },
+    async deleteNote({ dispatch }, noteId) {
+      try {
+        await api.delete("notes/" + noteId);
+      } catch (error) {
+        console.error(error);
+        dispatch("getNotesByBugId");
       }
     },
   },

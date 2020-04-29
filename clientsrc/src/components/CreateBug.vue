@@ -51,15 +51,13 @@ export default {
 
   methods: {
     addBug() {
-      console.log("newBug created: ", this.newbug);
+      console.log("newBug created: ", this.newBug);
       this.$store.dispatch("addBug", this.newBug);
       this.newBug = {};
     }
   },
   components: {},
-  mounted() {
-    console.log(this.$auth.userInfo);
-  }
+  mounted() {}
 };
 </script>
 

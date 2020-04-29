@@ -18,6 +18,15 @@ class BugsService {
     }
     return value;
   }
+
+  async findByIdAndEdit(id, body) {
+    let value = await dbContext.Bugs.findByIdAndUpdate(id, body);
+
+    if (!value) {
+      throw new BadRequest("Invalid Id");
+    }
+    return value;
+  }
   async create(bug) {
     console.log("Bug: ", bug);
     await dbContext.Bugs.create(bug);

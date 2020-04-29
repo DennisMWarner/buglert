@@ -1,5 +1,5 @@
 <template class="bg-info">
-  <div class="bugs bg-warning border border-primary rounded shadow-lg mt-5">
+  <div class="bugs bg-warning border border-white rounded shadow-lg mt-5">
     <div class="row">
       <div class="col-12 text-right">
         <div class="btn-group btn-block mr-5" role="group">
@@ -12,26 +12,36 @@
             aria-expanded="false"
           >Filter by:</button>
           <div
-            class="dropdown-menu text-center bg-primary border border-light btn-block"
+            class="dropdown-menu text-center bg-warning border border-white shadow btn-block"
             aria-labelledby="btnGroupDrop1"
           >
             <a
-              class="dropdown-item border btn btn-block rounded my-1 mx-auto w-50 bg-primary text-danger text-center border-danger"
+              class="dropdown-item border border-white rounded my-1 w-50 mx-auto bg-primary text-center text-white border-secondary text-wrap"
               href="#"
+              @click="getUserBugs()"
             >
-              <h3>Status: closed</h3>
+              <h3>Show Only Bugs That I Have Submitted</h3>
             </a>
             <a
-              class="dropdown-item border rounded my-1 w-50 mx-auto bg-primary text-success text-center border-success"
+              class="dropdown-item border border-white rounded my-1 w-50 mx-auto bg-primary text-center text-white border-secondary text-wrap"
               href="#"
+              @click="getBugs()"
             >
-              <h3>Status: open</h3>
+              <h3>Show All Bugs</h3>
             </a>
             <a
-              class="dropdown-item border border-white rounded my-1 w-50 mx-auto bg-dark text-center text-white border-secondary text-wrap"
+              class="dropdown-item border btn btn-block rounded my-1 mx-auto w-50 bg-secondary text-light text-center border-light"
               href="#"
+              @click="getClosedBugs()"
             >
-              <h3>Show only bugs that I have submitted</h3>
+              <h3>Show Bugs Status: CLOSED</h3>
+            </a>
+            <a
+              class="dropdown-item border rounded my-1 w-50 mx-auto bg-success text-white text-center border-white"
+              href="#"
+              @click="getOpenBugs()"
+            >
+              <h3>Show Bugs Status: OPEN</h3>
             </a>
           </div>
         </div>
@@ -55,7 +65,23 @@ export default {
       return this.$store.state.bugs;
     }
   },
-  methods: {},
+  methods: {
+    getUserBugs() {
+      this.$store.dispatch("getUserBugs", this.$auth.userInfo.email);
+    },
+
+    getBugs() {
+      this.$store.dispatch("getBugs");
+    },
+
+    getClosedBugs() {
+      this.$store.dispatch("getClosedBugs");
+    },
+
+    getOpenBugs() {
+      this.$store.dispatch("getOpenBugs");
+    }
+  },
   components: { bug }
 };
 </script>

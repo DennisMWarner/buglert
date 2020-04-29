@@ -6,25 +6,18 @@
       </div>
     </div>
     <div
-      v-if="bugData.closed==true"
+      v-if="bugData.closed==!true"
       class="row w-75 m-auto text-center bg-success text-white mx-1 rounded"
     >
-      <div class="col-12 m-auto">
-        <h5 class="pt-1">
-          {{bugData.createdAt}}
-          Status: {{bugData.closed}}
-        </h5>
+      <div class="col-12 m-auto justify-content-around">
+        <h5 class="pt-1">Last Modified: {{bugData.createdAt}}</h5>
+        <h5>Status: Open</h5>
       </div>
     </div>
-    <div
-      v-else
-      class="row w-75 m-auto text-center bg-danger text-white border border-white mx-1 rounded"
-    >
-      <div class="col-12 m-auto">
-        <h5>
-          {{bugData.createdAt}}
-          Status: {{bugData.closed}}
-        </h5>
+    <div v-else class="row w-75 m-auto text-center bg-secondary text-light mx-1 rounded">
+      <div class="col-12 m-auto justify-content-around">
+        <h5 class="pt-1">Last Modified: {{bugData.createdAt}}</h5>
+        <h5>Status: Closed</h5>
       </div>
     </div>
     <div
@@ -35,11 +28,8 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-4">
-        <p>{{bugData.name}}</p>
-      </div>
-      <div class="col-4">{{bugData.creatorEmail}}</div>
-      <!-- <div class="col-4 text-wrap">{{bugData.picture}}</div> -->
+      <div class="col-12 text-white">{{bugData.creatorEmail}}</div>
+      <!-- <div class="col-4">{{bugData.picture}}</div> -->
     </div>
   </div>
 </template>

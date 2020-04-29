@@ -10,13 +10,15 @@ export class BugsController extends BaseController {
     super("api/bugs");
     this.router
       .get("", this.getAll)
+      .get("/open", this.getOpen)
+      .get("/closed", this.getClosed)
       .get("/:id", this.getById)
       .get("/:id/notes", this.getNotesByBugId)
-      .use(auth0Provider.getAuthorizedUserInfo)
       // NOTE: Beyond this point all routes require Authorization tokens (the user must be logged in)
+      .use(auth0Provider.getAuthorizedUserInfo)
+      .get("/user/:id", this.getByUserId)
       .put("/:id", this.edit)
       .post("", this.create);
-    // .put("/:id", this.edit)
   }
   async getAll(req, res, next) {
     try {
@@ -40,6 +42,27 @@ export class BugsController extends BaseController {
       next(error);
     }
   }
+  async getOpen(req, res, next) {
+    try {
+      res.send(await bugsService.findAll({ closed: false }));
+    } catch (error) {
+      next(error);
+    }
+  }
+  async getClosed(req, res, next) {
+    try {
+      res.send(await bugsService.findAll({ closed: true }));
+    } catch (error) {
+      next(error);
+    }
+  }
+  async getByUserId(req, res, next) {
+    try {
+      res.send(await bugsService.findAll({ creatorEmail: req.params.id }));
+    } catch (error) {
+      next(error);
+    }
+  }
   async create(req, res, next) {
     try {
       // NOTE NEVER TRUST THE CLIENT TO ADD THE CREATOR ID
@@ -52,7 +75,7 @@ export class BugsController extends BaseController {
   }
   async edit(req, res, next) {
     try {
-      res.send(await bugsService.findById(req.params.id));
+      res.send(await bugsService.findByIdAndEdit(req.params.id, req.body));
     } catch (error) {
       next(error);
     }

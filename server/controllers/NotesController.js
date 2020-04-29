@@ -10,7 +10,8 @@ export class NotesController extends BaseController {
       .get("", this.getAll)
       // NOTE: Beyond this point all routes require Authorization tokens (the user must be logged in)
       .use(auth0Provider.getAuthorizedUserInfo)
-      .post("", this.create);
+      .post("", this.create)
+      .delete("/:_id", this.delete);
   }
   async getAll(req, res, next) {
     try {
@@ -27,6 +28,14 @@ export class NotesController extends BaseController {
       res.send("Bug successfully submitted.");
     } catch (error) {
       next(error);
+    }
+  }
+
+  async delete(req, res, next) {
+    try {
+      res.send(await notesService.deleteById(req.params.id));
+    } catch (error) {
+      console.error(error);
     }
   }
 }

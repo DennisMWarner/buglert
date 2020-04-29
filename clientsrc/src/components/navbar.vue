@@ -17,14 +17,18 @@
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item" :class="{ active: $route.name == 'Home' }">
-          <router-link :to="{ name: 'Home' }" class="nav-link text-success">Home</router-link>
+          <router-link :to="{ name: 'Home' }" class="nav-link text-success">
+            <h5>Home</h5>
+          </router-link>
         </li>
         <li
           class="nav-item"
           v-if="$auth.isAuthenticated"
           :class="{ active: $route.name == 'Profile' }"
         >
-          <router-link class="nav-link text-success" :to="{ name: 'Profile' }">Profile</router-link>
+          <router-link class="nav-link text-success" :to="{ name: 'Profile' }">
+            <h5>Profile</h5>
+          </router-link>
         </li>
       </ul>
       <span class="navbar-text">

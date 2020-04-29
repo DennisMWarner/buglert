@@ -1,5 +1,5 @@
 <template>
-  <div class="createNote rounded bg-primary border border-light shadow p-1 mx-5 row">
+  <div class="createNote rounded bg-primary border border-light shadow p-1 mt-3 mx-5 row">
     <form class="col-12">
       <div class="form-group row text-left"></div>
       <div class="form-group row bg-primary">
