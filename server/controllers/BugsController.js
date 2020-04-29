@@ -14,6 +14,7 @@ export class BugsController extends BaseController {
       .get("/:id/notes", this.getNotesByBugId)
       .use(auth0Provider.getAuthorizedUserInfo)
       // NOTE: Beyond this point all routes require Authorization tokens (the user must be logged in)
+      .put("/:id", this.edit)
       .post("", this.create);
     // .put("/:id", this.edit)
   }
@@ -49,7 +50,11 @@ export class BugsController extends BaseController {
       next(error);
     }
   }
-  //  async edit(req, res, next) {
-  //    implement me!
-  //   }
+  async edit(req, res, next) {
+    try {
+      res.send(await bugsService.findById(req.params.id));
+    } catch (error) {
+      next(error);
+    }
+  }
 }

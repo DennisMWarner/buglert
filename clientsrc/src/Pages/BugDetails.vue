@@ -11,6 +11,7 @@
         <button
           type="button"
           class="btn btn-transparent border bg-primary text-white rounded shadow border-white m-3"
+          @click="closeBug()"
         >
           <h5 class="pt-1">Mark Bug as Closed</h5>
         </button>
@@ -21,6 +22,7 @@
         </h5>
       </div>
     </div>
+
     <div class="row mt-2 bg-primary mx-5 border rounded shadow">
       <div class="col-10">
         <h3>{{activeBug.title}}</h3>
@@ -38,6 +40,7 @@
       <div class="col-3 text-center">{{this.$auth.userInfo.name}}</div>
       <div class="col-3 text-right">{{activeBug.creatorEmail}}</div>
     </div>
+
     <notes />
     <createNote />
 
@@ -60,7 +63,12 @@ export default {
       return this.$store.state.activeBug;
     }
   },
-  methods: {},
+  methods: {
+    closeBug() {
+      this.$store.dispatch("closeBug", this.activeBug.id);
+    },
+    editBug() {}
+  },
   components: { bugNote, createNote, notes },
   mounted() {
     //console.log("ActiveBlog page created...");

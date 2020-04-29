@@ -61,9 +61,10 @@ export default new Vuex.Store({
         console.error(error);
       }
     },
-    async getBug({ commit, dispatch }, bugId) {
+    async getBug({ commit }, bugId) {
       try {
         let res = await api.get("bugs/" + bugId);
+        console.log("getBug: ", bugId, res.data);
         commit("setActiveBug", res.data);
         console.log("getBug res: ", res.data);
       } catch (error) {
@@ -78,6 +79,14 @@ export default new Vuex.Store({
         console.error(error);
       }
     },
+    // async closeBug({ commit, dispatch }, bugId) {
+    //   try {
+    //     let res = await api.put("bugs/" + bugId, bugId:{ closed: true });
+    //     dispatch("getBugs");
+    //   } catch (error) {
+    //     console.error(error);
+    //   }
+    // },
 
     async addNote({ commit, dispatch }, newNote) {
       try {

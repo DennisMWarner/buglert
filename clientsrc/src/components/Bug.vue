@@ -6,7 +6,7 @@
       </div>
     </div>
     <div
-      v-if="!bugData.closed==true"
+      v-if="bugData.closed==true"
       class="row w-75 m-auto text-center bg-success text-white mx-1 rounded"
     >
       <div class="col-12 m-auto">

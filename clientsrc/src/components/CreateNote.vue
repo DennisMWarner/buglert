@@ -1,5 +1,5 @@
 <template>
-  <div class="createNote rounded bg-primary shadow p-1 m-5 row">
+  <div class="createNote rounded bg-primary border border-light shadow p-1 mx-5 row">
     <form class="col-12">
       <div class="form-group row text-left"></div>
       <div class="form-group row bg-primary">
@@ -11,10 +11,10 @@
           v-model="newNote.content"
         ></textarea>
       </div>
-      <div class="form-group row justify-content-right">
+      <div class="form-group row">
         <button
           type="button"
-          class="btn border bg-warning text-white rounded shadow border-white mt-1 ml-3 text-center"
+          class="btn border bg-success text-white rounded shadow border-white mt-1 ml-3"
           @click="addNote()"
         >
           <h5 class="w-100 pt-2">Add Note</h5>

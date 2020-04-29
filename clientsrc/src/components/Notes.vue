@@ -1,7 +1,8 @@
-<template class="bg-info">
-  <div class="notes bg-white border text-dark rounded shadow-lg mt-5">
-    Notes Here...
-    <note v-for="note in notes" :noteData="note" :key="note.id" />
+<template >
+  <div class="notes row bg-warning text-dark m-auto">
+    <div class="col-12">
+      <note v-for="note in notes" :noteData="note" :key="note.id" />
+    </div>
   </div>
 </template>
 

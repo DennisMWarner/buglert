@@ -12,6 +12,7 @@ class BugsService {
   }
   async findById(id) {
     let value = await dbContext.Bugs.findById(id);
+
     if (!value) {
       throw new BadRequest("Invalid Id");
     }
